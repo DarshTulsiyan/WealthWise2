@@ -36,15 +36,25 @@ exports.registerUser = async (req, res) => {
     const payload = {
       user: {
         id: user.id,
+        email: user.email,
       },
     };
 
+    // jwt.sign(
+    //   payload,
+    //   process.env.JWT_SECRET, // You should store this in an environment variable
+    //   { expiresIn: '6h' },
+    //   (err, token) => {
+    //     if (err) throw err; 
+    //     res.json({ token });
+    //   }
+    // );
     jwt.sign(
       payload,
-      process.env.JWT_SECRET, // You should store this in an environment variable
-      { expiresIn: '6h' },
+      config.get('jwtSecret'),
+      { expiresIn: '1h' }, // Token expiration time
       (err, token) => {
-        if (err) throw err; 
+        if (err) throw err;
         res.json({ token });
       }
     );

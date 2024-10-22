@@ -75,7 +75,10 @@ const auth = require('../middleware/authMiddleware');
   router.post('/', auth, async (req, res) => {
     try {
       const { categories } = req.body;
-  
+      const userId = req.query.userId || req.user._id;
+      // const userId = req.params.userId;
+      // console.log(userId)
+
       // Calculate the total for each category based on its items
       categories.forEach(category => {
         category.amount = category.items.reduce((total, item) => total + item.amount, 0);
@@ -83,7 +86,7 @@ const auth = require('../middleware/authMiddleware');
   
       // Update the user's expense data
       const expense = await Expense.findOneAndUpdate(
-        { user: req.userId },
+        { user: userId },
         {
           $set: {
             categories: categories, // Update all categories
@@ -95,7 +98,7 @@ const auth = require('../middleware/authMiddleware');
           runValidators: true,
         }
       );
-  
+      
       res.status(201).json(expense);
     } catch (error) {
       console.error('Error saving expenses:', error);
@@ -103,9 +106,11 @@ const auth = require('../middleware/authMiddleware');
     }
   });
 
-  router.get('/:userId', auth, async (req, res) => {
+  router.get('/', auth, async (req, res) => {
     try {
-      const userId = req.params.userId;
+      // Use userId from the request query or fall back to authenticated user's ID
+      const userId = req.query.userId || req.user._id;
+      console.log(userId, "user Id")
   
       // Fetch the expense data for the user
       const expense = await Expense.findOne({ user: userId });
@@ -113,14 +118,14 @@ const auth = require('../middleware/authMiddleware');
       if (!expense) {
         return res.status(404).json({ message: 'Expenses not found for this user' });
       }
-  
+      console.log(expense)
       // Send the expense data as the response
       res.status(200).json(expense);
     } catch (error) {
       console.error('Error fetching expenses:', error);
       res.status(500).json({ message: 'Error fetching expenses', error: error.message });
     }
-  });
+  });  
   
 
 // Get all expenses for a user

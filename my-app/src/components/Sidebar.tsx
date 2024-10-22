@@ -14,25 +14,29 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("");
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const token = localStorage.getItem('token');
-  //       const res = await axios.get('http://localhost:8000/api/user', {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       setUser(res.data);
-  //     } catch (err) {
-  //       console.error('Failed to fetch user:', err);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const name = localStorage.getItem('name'); 
+  
+        // const response = await axios.get('http://localhost:8000/api/user', {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // });
+  
+        setUser(name);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+  
+    fetchUserData();
+  }, []);
+  
 
-  //   fetchUser();
-  // }, []);
   
   return (
     <div className="min-h-screen w-64 bg-gray-900 text-white p-4 flex flex-col">
@@ -66,14 +70,11 @@ export default function Sidebar() {
         <div className="flex items-center gap-3 px-4 py-2 mb-2">
           <User size={20} />
           <div>
-            {/* {user ? (
-              <>
-                <p className="text-sm">{user.name}</p>
-              </>
+            {user ? (
+              <p className="text-sm">{user}</p>
             ) : (
               <p>Loading...</p>
-            )} */}
-            <p>Darsh Tulsiyan</p>
+            )}
           </div>
         </div>
         <button className="flex items-center gap-3 px-4 py-2 w-full rounded-lg hover:bg-gray-800 transition-colors text-red-400">
