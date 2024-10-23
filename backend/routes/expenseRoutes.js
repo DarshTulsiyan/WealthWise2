@@ -3,8 +3,6 @@ const router = express.Router();
 const Expense = require('../models/Expense');
 const auth = require('../middleware/authMiddleware');
 
-
-
   router.post('/', auth, async (req, res) => {
     try {
       const { categories } = req.body;
@@ -59,4 +57,7 @@ const auth = require('../middleware/authMiddleware');
       res.status(500).json({ message: 'Error fetching expenses', error: error.message });
     }
   });  
+  
+
+
 module.exports = router;

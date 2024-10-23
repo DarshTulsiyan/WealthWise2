@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from 'next/link';
 
 export default function UpcomingBills() {
   const bills = [
@@ -17,7 +18,8 @@ export default function UpcomingBills() {
   ];
 
   return (
-    <Card>
+    <Link href='/bills'>
+    <Card className="cursor-pointer">
       <CardContent className="p-6">
         <h2 className="text-xl font-semibold mb-4">Upcoming Bills</h2>
         <Table>
@@ -38,5 +40,6 @@ export default function UpcomingBills() {
         </Table>
       </CardContent>
     </Card>
+    </Link>
   );
 }

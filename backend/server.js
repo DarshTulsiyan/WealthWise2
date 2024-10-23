@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const billRoutes = require('./routes/billRoutes');
 const authRoutes = require('./routes/authRoutes');
+const goalRoutes = require('./routes/goalRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
 
 dotenv.config();
@@ -23,7 +24,10 @@ app.use(cors({
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/expenses', expenseRoutes);
-app.use('/api/bills', billRoutes);
+// app.use('/api/bills', billRoutes);
+app.use('/api/goals', goalRoutes);
+
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

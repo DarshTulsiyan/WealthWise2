@@ -52,7 +52,7 @@ exports.registerUser = async (req, res) => {
     jwt.sign(
       payload,
       config.get('jwtSecret'),
-      { expiresIn: '1h' }, // Token expiration time
+      { expiresIn: '6h' }, // Token expiration time
       (err, token) => {
         if (err) throw err;
         res.json({ token });
