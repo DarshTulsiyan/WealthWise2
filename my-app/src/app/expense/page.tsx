@@ -9,7 +9,7 @@ import { Button } from '../../components/ui/button';
 import axios from 'axios';
 
 // Function to fetch current expense data
-async function fetchExpenseData(userId) {
+export async function fetchExpenseData(userId) {
   console.log(userId)
   try {
     const response = await axios.get(`http://localhost:8000/api/expenses`, {
@@ -98,7 +98,6 @@ export default function WealthWise() {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-semibold">Expenses Comparison</h1>
           <div className="space-x-4">
-            <Button variant="outline">SET BUDGET</Button>
             <Button onClick={handleAddExpense}>+ ADD EXPENSE</Button>
           </div>
         </div>
